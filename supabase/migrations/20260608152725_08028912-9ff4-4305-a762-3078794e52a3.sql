@@ -1,0 +1,2 @@
+CREATE POLICY "Public read vavitaphoto" ON storage.objects FOR SELECT USING (bucket_id = 'vavitaphoto');
+CREATE POLICY "Service role manages vavitaphoto" ON storage.objects FOR ALL TO service_role USING (bucket_id = 'vavitaphoto') WITH CHECK (bucket_id = 'vavitaphoto');

@@ -170,6 +170,21 @@ Supabase functions and migrations are deployed separately. Shopify continues to 
 - The included Vitest suite contains a starter test, not comprehensive feature coverage. The exported Playwright files reference Lovable-specific helper packages that are not declared in `package.json`.
 - Live commerce, email, external widgets, and hosted storage depend on their respective services and configuration. A successful local build does not verify these integrations.
 
+## Import validation
+
+The original npm lockfile was out of sync with `package.json`. It has been synchronized without changing the declared dependencies or application source.
+
+Checks performed with Node.js 24.19.0:
+
+| Check | Result |
+| --- | --- |
+| Dependency installation | Passed with `npm install`; synchronized lockfile also passed `npm ci --dry-run --offline` |
+| `npm run build` | Passed; existing bundle-size and styling warnings remain |
+| `npm test` | Passed: 1 existing starter test |
+| `npm run lint` | Reports 6 existing errors and 16 warnings in the original source |
+
+The lint findings include explicit `any` types, empty interfaces, and a CommonJS-style import. They do not prevent the production build, but should be addressed as part of future source maintenance. Live purchases, inquiry emails, and external services were not exercised during this import.
+
 ## License and assets
 
 No license file is included in the original export. VAVITAS branding, product photography, certification images, and third-party logos are retained as supplied with the project. Check the relevant permissions before reusing them in another project.

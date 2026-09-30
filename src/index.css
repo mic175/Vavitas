@@ -1,0 +1,144 @@
+/* No external web fonts are loaded. The app uses a system font stack
+   (defined below and in tailwind.config.ts) that includes Chinese-friendly
+   fallbacks so it renders immediately in mainland China where Google Fonts
+   and most font CDNs (including fonts.loli.net) can be blocked. */
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Vavitas brand palette: teal from logo + neutral grays, Gelita-style layout */
+    --background: 0 0% 100%;
+    --foreground: 240 4% 22%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 4% 22%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 4% 22%;
+
+    /* Signature Vavitas teal — extracted from logo (#078B90) */
+    --primary: 183 92% 30%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 15% 96%;
+    --secondary-foreground: 240 4% 22%;
+
+    --muted: 220 12% 96%;
+    --muted-foreground: 240 4% 45%;
+
+    --accent: 183 88% 24%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 183 92% 30%;
+
+    --radius: 0.125rem;
+
+    --font-heading: ui-serif, Georgia, Cambria, "Times New Roman", "Songti SC", "SimSun", serif;
+    --font-body: system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(183 30% 96%) 100%);
+    --gradient-teal: linear-gradient(135deg, hsl(183 92% 30%), hsl(183 88% 24%));
+    --shadow-card: 0 1px 3px 0 hsl(240 4% 22% / 0.05), 0 1px 2px -1px hsl(240 4% 22% / 0.04);
+    --shadow-card-hover: 0 10px 30px -8px hsl(240 4% 22% / 0.14);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+  }
+  /* Graceful image fallback: if an <img> fails to load (e.g. blocked CDN in
+     China), browsers show a broken-image icon and a large blank box. Hiding
+     the alt text + applying a neutral muted background keeps the layout
+     intact instead of a glaring white hole. Pair with width/height or
+     aspect-ratio on the element so reserved space stays reasonable. */
+  img {
+    background-color: hsl(var(--muted));
+  }
+  img:not([src]), img[src=""], img[alt][src]:not([src^="data:"])[data-broken="true"] {
+    color: transparent;
+  }
+}
+
+@layer utilities {
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  .gradient-teal {
+    background: var(--gradient-teal);
+  }
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  .shadow-card-hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+  .text-gradient-teal {
+    background: var(--gradient-teal);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  /* Gelita signature: short orange accent line under headings */
+  .accent-bar::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 4px;
+    background-color: hsl(var(--primary));
+    margin-top: 1.25rem;
+  }
+  .accent-bar-center::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 4px;
+    background-color: hsl(var(--primary));
+    margin: 1.25rem auto 0;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}

@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Public read vavitaphoto" ON storage.objects;
